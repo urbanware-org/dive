@@ -1,0 +1,39 @@
+
+REQUIREMENTS (Dive)
+
+    Notice
+
+        This version of Dive was built for the Python 2.x framework. If you
+        need a version that works with Python 3.x, you may look here:
+
+            http://www.urbanware.org/dive.html
+
+    General
+
+        Software requirements in general:
+
+            - Python 2.x (version 2.7 or higher is recommended, may also work
+                          with earlier versions)
+
+    Deep Dive feature
+
+        The Deep Dive feature requires Python 2.7 or higher and does NOT work
+        with earlier versions of the framework.
+
+        Furthermore, depending on the archive file types from which you want
+        to read out content information, some additional archive extraction
+        tools are required. These are available for various platforms and can
+        be downloaded for free.
+
+        The following tools are supported:
+
+            - UnACE (version 2.50 or higher is recommended, may also work with
+                     earlier versions)
+            - UnRAR (version 4.2.3 or higher is recommended, may also work
+                     with earlier versions)
+
+        Details can be found on the corresponding website of the tool:
+
+            - WinACE website, http://www.winace.com
+            - WinRAR website, http://www.rarlab.com
+

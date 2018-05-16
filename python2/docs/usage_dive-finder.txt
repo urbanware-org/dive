@@ -1,0 +1,98 @@
+
+USAGE (dive-finder.py)
+
+    Contents:
+
+        1.  Definition
+        2.  General stuff
+          2.1  How to run Python scripts
+          2.2  Overview of all command-line arguments
+        3.  Find contents
+          3.1  Find contents using basic strings
+          3.2  Find contents using wildcards
+          3.3  Read error tag
+
+    1. Definition
+
+        The Dive Content Finder script searches the content files for a given
+        search term.
+
+        It also allows using a search pattern with wildcards as well as
+        regular expressions.
+
+    2. General stuff
+
+        2.1 How to run Python scripts
+
+            All usage examples below show how to execute the Python scripts on
+            the shell of a Unix-like system. If you do not know, how to run
+            those scripts on your operating system, you may have a look at
+            this page:
+
+                http://www.urbanware.org/howto_python.html
+
+        2.2 Overview of all command-line arguments
+
+            Usually, each script requires command-line arguments to operate.
+            So, to get an overview of all arguments available, simply run the
+            script with the "--help" argument. For example:
+
+                $ ./dive-finder.py --help
+
+    3. Find contents
+
+        In the following examples the existing content files are stored inside
+        the directory "/home/johndoe/dive/content".
+
+        3.1 Find contents using basic strings
+
+            If you want to search your content files for the search term
+            "foobar" the command line would look like this:
+
+                $ ./dive-finder.py -d /home/johndoe/dive/content -s "foobar"
+
+            The given search term is being processed case-insensitive by
+            default. That means, the search term given above would match
+            "foobar" as well as e. g. "Foobar", "FooBar", "FOOBAR", "FOObar"
+            and so on.
+
+            So, to process the search term case-sensitive, type:
+
+                $ ./dive-finder.py -d /home/johndoe/dive/content -s "foobar" \
+                                   -c
+
+            Before version 1.2.8, the arguments for the search term ("-s") and
+            the case sensitivity ("-c") were the other way around. So, in the
+            earlier versions "-c" was standing for "criteria" and "-s" for the
+            case sensitivity. Due to the fact, that "criteria" was renamed to
+            "search term" (for more clarity) in version 1.2.8, those argument
+            shortcuts have been swapped.
+
+        3.2 Find contents using wildcards
+
+            The search term also supports asterisk wildcards. For example,
+            if you want to search for a string that starts with "foo" and ends
+            with "bar", type:
+
+                $ ./dive-finder.py -d /home/johndoe/dive/content -s "foo*bar"
+
+            You can also use multiple asterisk wildcards within the search
+            term
+
+                $ ./dive-finder.py -d /home/johndoe/dive/content -s "foo*b*r"
+
+            as well as multiple search terms (seperated by semicolons)
+
+                $ ./dive-finder.py -d /home/johndoe/dive/content -s "foo;bar"
+
+            and also multiple search terms with wildcards:
+
+                $ ./dive-finder.py -d /home/johndoe/dive/content -s "f*o;b*r"
+
+        3.3 Read error tag
+
+            In case read errors will be ignored and a read error occurs when
+            trying to read an archive, the archive file will be added to the
+            content file with the additional "[?]" tag, so you can see inside
+            the content file that there was a problem reading the archive.
+

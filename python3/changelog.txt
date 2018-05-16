@@ -1,0 +1,42 @@
+
+CHANGELOG (Dive)
+
+    Version 2.1.3 (2018-02-19)
+
+        + Added new versions of the Clap and PaVal core modules (replaced the
+          existing ones).
+
+        * Revised (refurbished) all components of the project in general
+          (negligible changes).
+
+    Version 2.1.2 (2015-03-05)
+
+        * Revised some code inside the Dive Content File Builder core module
+          (negligible changes).
+        * Revised the code for handling regular expressions inside the Dive
+          Common core module.
+
+    Version 2.1.1 (2014-06-27)
+
+        + Added a tag (to the corresponding line inside the content file) in
+          case a read error occurs when trying to read an archive.
+
+        * Revised some code inside the Dive Common, Dive Content File Builder
+          and Deep Dive core module.
+
+    Version 2.1.0 (2014-05-02)
+
+        * Revised (reorganized) the Dive Content File Builder as well as the
+          Deep Dive core module (less code, more clarity).
+        * Revised the Dive Content File Builder script (necessary due to the
+          changes inside the Dive Content File Builder core module).
+
+        # Fixed the error handler bug inside the Deep Dive core module that
+          occurred when trying to read a corruped archive file.
+        # Fixed the read error counter bug inside the Dive Content File
+          Builder core module (read errors have not been added properly).
+
+    Version 2.0.0 (2014-04-30)
+
+        * First official release of this major version.
+

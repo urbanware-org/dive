@@ -1,0 +1,181 @@
+
+USAGE (dive-builder.py)
+
+    Contents:
+
+        1.  Definition
+        2.  General stuff
+          2.1  How to run Python scripts
+          2.2  Overview of all command-line arguments
+        3.  Content files
+          3.1  Create a content file from a directory
+          3.2  Replace the source directory path
+          3.3  Include contents of archive files
+        4.  Exclude contents
+          4.1  Exclude certain content using basic strings
+          4.2  Exclude certain content using wildcards
+
+    1. Definition
+
+        The Dive Content File Builder script stores the content information
+        from directories as well as all kinds of media (such as floppy disks,
+        memory cards and sticks, hard disks, network drives, data CDs, data
+        DVDs, etc.) into a content file.
+
+        File information can be excluded from the content file by giving an
+        exclude pattern that supports wildcards or a regular expression.
+
+    2. General stuff
+
+        2.1 How to run Python scripts
+
+            All usage examples below show how to execute the Python scripts on
+            the shell of a Unix-like system. If you do not know, how to run
+            those scripts on your operating system, you may have a look at
+            this page:
+
+                http://www.urbanware.org/howto_python.html
+
+        2.2 Overview of all command-line arguments
+
+            Usually, each script requires command-line arguments to operate.
+            So, to get an overview of all arguments available, simply run the
+            script with the "--help" argument. For example:
+
+                $ ./dive-builder.py --help
+
+    3. Content file
+
+        The content files have the file extension "*.dcl" (this stands for
+        "directory content list"), which will be added to new content files
+        automatically, if missing.
+
+        In the following examples the created content files will be stored
+        inside the directory "/home/johndoe/dive/content".
+
+        3.1 Create a content file from a directory
+
+            For example, to create a new content file named "stuff.dcl" from
+            the directory "/tmp/stuff" type:
+
+                $ ./dive-builder.py -d /home/johndoe/dive/content -f stuff \
+                                    -s /tmp/stuff
+
+            The lines inside the content files look like this:
+
+                /tmp/stuff/foo1.bar
+                /tmp/stuff/foo2.bar
+                /tmp/stuff/foo/foo3.bar
+                /tmp/stuff/foo/foo4.bar
+
+        3.2 Replace the source directory path
+
+            The path of the source directory inside the content file can also
+            be replaced with a user-defined string.
+
+            For example, if you want to create the content file and replace
+            the source directory path with the string "My stuff: ", the
+            command line would look like this:
+
+                $ ./dive-builder.py -d /home/johndoe/dive/content -f stuff \
+                                    -s /tmp/stuff -r "My stuff: "
+
+            This affects the content file as follows:
+
+                My stuff: foo1.bar
+                My stuff: foo2.bar
+                My stuff: foo/foo3.bar
+                My stuff: foo/foo4.bar
+
+            The source directory path can also be replaced with an empty
+            string to entirely remove it:
+
+                $ ./dive-builder.py -d /home/johndoe/dive/content -f stuff \
+                                    -s /tmp/stuff -r ""
+
+        3.3 Include contents of archive files
+
+            The Dive Content File Builder script also comes with the so called
+            Deep Dive feature which allows to additionally read the content
+            information of archive files, but only if they are not password
+            protected.
+
+            Supported archive formats are:
+
+                - ACE (requires the "unace" tool)
+                - RAR (requires the "unrar" tool)
+                - TAR (supported natively, also if Bzip2 or Gzip compressed)
+                - ZIP (supported natively)
+
+            If an archive file contains another one, e. g. if the ZIP archive
+            "foo.zip" contains the RAR archive "bar.rar", the contents of the
+            RAR archive will not be read out.
+
+            So, if you want to additionally gather the content of ZIP archive
+            files inside the given source directory, type:
+
+                $ ./dive-builder.py -d /home/johndoe/dive/content -f stuff \
+                                    -s /tmp/stuff --include-zip
+
+            As already mentioned, the argeuments to gather the content of ACE
+            and RAR archives ("--include-ace", "--include-rar") require the
+            path to the "unace" and "unrar" tool binaries (if installed).
+
+            For example, If you want to include the archive contents of ACE
+            and RAR archives using the binaries "/usr/bin/unace" (for ACE) and
+            "/usr/bin/unrar" (for RAR), the command line would look like this:
+
+                $ ./dive-builder.py -d /home/johndoe/dive/content -f stuff \
+                                    -s /tmp/stuff \
+                                    --include-ace /usr/bin/unace \
+                                    --include-rar /usr/bin/unrar
+
+            Of course, the arguments for gathering archive contents can be
+            combined. So, it is also possible to gather the contents of all
+            archives supported inside the source directory:
+
+                $ ./dive-builder.py -d /home/johndoe/dive/content -f stuff \
+                                    -s /tmp/stuff \
+                                    --include-ace /usr/bin/unace \
+                                    --include-rar /usr/bin/unrar \
+                                    --include-tar --include-zip
+
+    4. Exclude contents
+
+        4.1 Exclude certain content using basic strings
+
+            You can also use a pattern to exclude certain files or directories
+            from the content file.
+
+            For example, to exclude all files and directories whose path or
+            file name contains the string "foo", type:
+
+                $ ./dive-builder.py -d /home/johndoe/dive/content -f stuff \
+                                    -s /tmp/stuff -e "foo"
+
+            The given exclude pattern is being processed case-insensitive by
+            default. That means, the string given above would match "foo" as
+            well as e. g. "FOO", "Foo", "FoO", and so on.
+
+            The exclude pattern can also consist of multiple exclude strings
+            (separated with semicolons):
+
+                $ ./dive-builder.py -d /home/johndoe/dive/content -f stuff \
+                                    -s /tmp/stuff -e "foo;bar"
+
+        4.2 Exclude certain content using wildcards
+
+            The exclude pattern also supports asterisk wildcards. For example,
+            if you want to exclude all files and directories whose path or
+            file name contains a string that starts with "foo" and ends with
+            "bar" (e. g. "foobar", "foo-bar" or "foo bar"), type:
+
+                $ ./dive-builder.py -d /home/johndoe/dive/content -f stuff \
+                                    -s /tmp/stuff -e "foo*bar"
+
+            The exclude pattern can also consist of multiple exclude strings
+            (separated with semicolons) with wildcards:
+
+                $ ./dive-builder.py -d /home/johndoe/dive/content -f stuff \
+                                    -s /tmp/stuff -e "f*o;b*r"
+
